@@ -13,6 +13,7 @@ const acessos = {
       {
         "Usuario": "diana.green123",
         "Senha": "DianaPass123!",
+        "cep":"13573282",
         "TipoDeAcesso": "Medico",
         "imagem": ""
       }
@@ -21,6 +22,7 @@ const acessos = {
       {
         "Usuario": "bob.brown654",
         "Senha": "BobPass654!",
+        "cep":"13573282",
         "TipoDeAcesso": "Paciente",
         "imagem": ""
       }
@@ -29,6 +31,7 @@ const acessos = {
       {
         "Usuario": "admin.user789",
         "Senha": "AdminPass789!",
+        "cep":"13573282",
         "TipoDeAcesso": "Administrador",
         "imagem": ""
 
@@ -145,9 +148,9 @@ routes.get('/usuarios', (req, res) => {
 
     // Criar um array com todos os usuários e senhas
     const usuarios = {
-      Administradores: acessos.Administradores.map(({ Usuario, Senha, imagem }) => ({ Usuario, Senha, imagem })),
-      Medicos: acessos.Medicos.map(({ Usuario, Senha, imagem }) => ({ Usuario, Senha, imagem })),
-      Pacientes: acessos.Pacientes.map(({ Usuario, Senha,imagem }) => ({ Usuario, Senha,imagem }))
+      Administradores: acessos.Administradores.map(({ Usuario, Senha, cep,imagem }) => ({ Usuario, Senha, cep,imagem })),
+      Medicos: acessos.Medicos.map(({ Usuario, Senha, cep, imagem }) => ({ Usuario, Senha,cep,  imagem })),
+      Pacientes: acessos.Pacientes.map(({ Usuario, Senha,cep, imagem }) => ({ Usuario, Senha,cep, imagem }))
     };
 
     // Retornar o array de usuários e senhas
@@ -183,7 +186,7 @@ const atendimentoFilePath = path.join(__dirname, 'src', 'Atendimentos.txt');
 
 // Rota para adicionar paciente
 routes.post('/paciente', (req, res) => {
-  const { user, password } = req.body;
+  const { user, password ,cep} = req.body;
 
   lerAcessos((acessos) => {
     if (!acessos) {
@@ -201,6 +204,7 @@ routes.post('/paciente', (req, res) => {
     acessos.Pacientes.push({
       Usuario: user,
       Senha: password,
+      cep: cep,
       TipoDeAcesso: 'Paciente'
     });
 
@@ -214,7 +218,7 @@ routes.post('/paciente', (req, res) => {
 });
 // Rota para adicionar médico
 routes.post('/medico', (req, res) => {
-  const { user, password } = req.body;
+  const { user, password, cep} = req.body;
 
   lerAcessos((acessos) => {
     if (!acessos) {
@@ -232,6 +236,7 @@ routes.post('/medico', (req, res) => {
     acessos.Medicos.push({
       Usuario: user,
       Senha: password,
+      cep: cep,
       TipoDeAcesso: 'Medico'
     });
 
